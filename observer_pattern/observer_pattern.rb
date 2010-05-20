@@ -48,13 +48,18 @@ class SevenDie
 end
 
 class ScoreBoard
-  attr_reader :board
+  attr_reader :winners
   def initialize(game)
     @game = game
-    @board = []
+    @winners = []
     @game.add_observer(self)
   end
   def update(winner)
-    @board << winner
+    @winners << winner
+  end
+  def score
+    scores = {}
+    @winners.uniq.each {|k| scores[k] = 0}
+    @winners.each {|k| scores[k] = scores[k] + 1 }
   end
 end

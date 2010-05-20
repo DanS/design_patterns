@@ -24,7 +24,7 @@ describe Game do
 
     it "should record the count of winners in the scoreBoard" do
       10.times {@game.play}
-      @game.scoreBoard.board.length.should == 10
+      @game.scoreBoard.winners.length.should == 10
     end
   end
   describe "playing the game" do
