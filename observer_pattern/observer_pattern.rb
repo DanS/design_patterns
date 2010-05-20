@@ -1,6 +1,12 @@
+require "observer"
+
 module Game_stuff
+  include Observable
   def winner
-    "#{[@game.player1, @game.player2][rand(2)]} is the winner"
+    name = [@game.player1, @game.player2][rand(2)]
+    changed
+    notify_observers(name)
+    "#{name} is the winner"
   end
   def greeting_message
     @welcome
@@ -8,11 +14,12 @@ module Game_stuff
 end
 
 class Game
-  attr_accessor :player1, :player2
+  attr_accessor :player1, :player2, :scoreBoard
   def initialize(game_type, player1 = "player1", player2 = "player2")
     @player1 = player1 
     @player2 = player2
-    @game = game_type.new(self) 
+    @game = game_type.new(self)
+    @scoreBoard = ScoreBoard.new(@game)
   end
   
   def start_game
@@ -27,8 +34,8 @@ end
 class TwoHeads
   include Game_stuff
   def initialize(game) 
-      @game = game
-      @welcome = "Welcome to Two Heads game, it is #{@game.player1}'s turn"
+    @game = game
+    @welcome = "Welcome to Two Heads game, it is #{@game.player1}'s turn"
   end
 end
 
@@ -41,5 +48,13 @@ class SevenDie
 end
 
 class ScoreBoard
-
+  attr_reader :board
+  def initialize(game)
+    @game = game
+    @board = []
+    @game.add_observer(self)
+  end
+  def update(winner)
+    @board << winner
+  end
 end
