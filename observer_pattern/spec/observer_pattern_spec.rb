@@ -20,7 +20,6 @@ describe Game do
   end
   describe "playing the game" do
     it "should return a winner name when played" do
-      pending
       @game = Game.new(TwoHeads)
       @game.play.should =~ /(.*)is the winner/
     end

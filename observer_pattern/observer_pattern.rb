@@ -1,3 +1,12 @@
+module Game_stuff
+  def winner
+    "#{[@game.player1, @game.player2][rand(2)]} is the winner"
+  end
+  def greeting_message
+    @welcome
+  end
+end
+
 class Game
   attr_accessor :player1, :player2
   def initialize(game_type, player1 = "player1", player2 = "player2")
@@ -11,26 +20,23 @@ class Game
   end
 
   def play
-    winner = [@game.player1, @game.player2].rand
-    return "#{winner} is the winner"
+    @game.winner
   end
 end
 
 class TwoHeads
+  include Game_stuff
   def initialize(game) 
       @game = game
-  end
-  def greeting_message
-    "Welcome to Two Heads game, it is #{@game.player1}'s turn"
+      @welcome = "Welcome to Two Heads game, it is #{@game.player1}'s turn"
   end
 end
 
 class SevenDie
+  include Game_stuff
   def initialize(game) 
     @game = game
-  end
-  def greeting_message
-    "Welcome to Seven Die game, it is #{@game.player1}'s turn"
+    @welcome = "Welcome to Seven Die game, it is #{@game.player1}'s turn"
   end
 end
 
