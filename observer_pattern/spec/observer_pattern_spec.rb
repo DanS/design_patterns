@@ -1,8 +1,10 @@
 require 'observer_pattern'
 #game1 first person to roll under 7 twice with a die wins
 #game2 first person to flip heads twice wins
+
 describe Game do
-  describe "At the start of the game" do 
+  describe "At the start of the game" do
+
     before do
       @game = Game.new(TwoHeads)
       @game_with_names = Game.new(TwoHeads, "Liah", "Shailen")
@@ -27,7 +29,9 @@ describe Game do
       @game.scoreBoard.winners.length.should == 10
     end
   end
+
   describe "playing the game" do
+
     it "should return a winner name when played" do
       @game = Game.new(TwoHeads)
       @game.play.should =~ /(.*)is the winner/
@@ -61,6 +65,7 @@ end
  
 describe SevenDie do
   describe "At the start of the game" do
+    
     before do
       @seven_die = Game.new(SevenDie)
       @seven_die_with_names = Game.new(SevenDie, "Liah", "Shailen")

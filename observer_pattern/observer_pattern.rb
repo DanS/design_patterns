@@ -1,20 +1,26 @@
 require "observer"
 
-module Game_stuff
+module GameStuff
+
   include Observable
+
   def winner
     name = [@game.player1, @game.player2][rand(2)]
     changed
     notify_observers(name)
     "#{name} is the winner"
   end
+
   def greeting_message
     @welcome
   end
+
 end
 
 class Game
+
   attr_accessor :player1, :player2, :scoreBoard
+
   def initialize(game_type, player1 = "player1", player2 = "player2")
     @player1 = player1 
     @player2 = player2
@@ -32,7 +38,7 @@ class Game
 end
 
 class TwoHeads
-  include Game_stuff
+  include GameStuff
   def initialize(game) 
     @game = game
     @welcome = "Welcome to Two Heads game, it is #{@game.player1}'s turn"
@@ -40,7 +46,7 @@ class TwoHeads
 end
 
 class SevenDie
-  include Game_stuff
+  include GameStuff
   def initialize(game) 
     @game = game
     @welcome = "Welcome to Seven Die game, it is #{@game.player1}'s turn"
@@ -54,12 +60,15 @@ class ScoreBoard
     @winners = []
     @game.add_observer(self)
   end
+
   def update(winner)
     @winners << winner
   end
+
   def score
     scores = {}
     @winners.uniq.each {|k| scores[k] = 0}
     @winners.each {|k| scores[k] = scores[k] + 1 }
   end
+  
 end
